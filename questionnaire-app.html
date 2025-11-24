@@ -11,6 +11,15 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <link rel="manifest" href="manifest.json">
     
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-1KTVYGDBHH"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-1KTVYGDBHH');
+    </script>
+    
     <style>
         * {
             margin: 0;
@@ -1072,7 +1081,7 @@
             
             try {
                 // Google Apps Script URL
-                const scriptUrl = 'https://script.google.com/macros/s/AKfycbyxpwO1wPunQLYMKqcDYSFXcbrRFUC__nJVAxVF2MqTsEge-AVSvi7mNdgdnDHs9hFucw/exec';
+                const scriptUrl = 'https://script.google.com/macros/s/AKfycbwX8DA4jvpwqssWfUb1NZxx9fYWTMCd8BidR0VJUlYVKbiIYbKhBtmQhO3-z468i4iVwA/exec';
                 
                 // Create FormData for better compatibility
                 const formDataToSend = new FormData();
