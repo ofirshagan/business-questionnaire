@@ -1,0 +1,1780 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#5B21B6">
+    <title>קבל ייעוץ עסקי בשווי ₪1,500 - בחינם! | אופיר שגן</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Heebo', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #5B21B6 0%, #1E3A8A 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            direction: rtl;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            z-index: -1;
+        }
+
+        /* Floating bubbles animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 0.3; }
+        }
+
+        .floating-badge {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #F59E0B, #EF4444);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+            z-index: 1000;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .trust-badges {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px 20px;
+            border-radius: 30px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            align-items: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 25px 100px rgba(0,0,0,0.2);
+            max-width: 520px;
+            width: 100%;
+            padding: 40px;
+            animation: slideIn 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #10B981, #3B82F6, #8B5CF6, #EC4899);
+            animation: gradient 3s ease infinite;
+        }
+
+        @keyframes gradient {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.4s ease;
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateX(20px);
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0);
+            }
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+        }
+
+        .progress-bar {
+            background: #E5E7EB;
+            height: 10px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #10B981, #3B82F6);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 10px;
+            font-size: 14px;
+            color: #6B7280;
+        }
+
+        .progress-percentage {
+            font-weight: 700;
+            color: #10B981;
+        }
+
+        h1 {
+            color: #1F2937;
+            margin-bottom: 15px;
+            font-size: 32px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        h2 {
+            color: #374151;
+            margin-bottom: 25px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #6B7280;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+
+        .highlight {
+            color: #10B981;
+            font-weight: 700;
+        }
+
+        .value-proposition {
+            background: linear-gradient(135deg, #FEF3C7, #FDE68A);
+            border: 2px solid #F59E0B;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .value-proposition::before {
+            content: '🎁';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 40px;
+            opacity: 0.3;
+            transform: rotate(15deg);
+        }
+
+        .value-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #92400E;
+            margin-bottom: 10px;
+        }
+
+        .value-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .value-list li {
+            padding-right: 25px;
+            margin-bottom: 8px;
+            position: relative;
+            color: #78350F;
+        }
+
+        .value-list li::before {
+            content: '✓';
+            position: absolute;
+            right: 0;
+            color: #10B981;
+            font-weight: 700;
+        }
+
+        .countdown {
+            background: #FEE2E2;
+            border: 1px solid #F87171;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .countdown-title {
+            color: #991B1B;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        .countdown-timer {
+            font-size: 24px;
+            font-weight: 700;
+            color: #DC2626;
+        }
+
+        .question {
+            margin-bottom: 25px;
+            opacity: 0;
+            animation: questionFadeIn 0.5s ease forwards;
+        }
+
+        @keyframes questionFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .question:nth-child(1) { animation-delay: 0.1s; }
+        .question:nth-child(2) { animation-delay: 0.2s; }
+        .question:nth-child(3) { animation-delay: 0.3s; }
+        .question:nth-child(4) { animation-delay: 0.4s; }
+        .question:nth-child(5) { animation-delay: 0.5s; }
+
+        .question label {
+            display: block;
+            color: #1F2937;
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 16px;
+        }
+
+        .question-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            background: #F9FAFB;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #6366F1;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .radio-item,
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            padding: 14px;
+            background: #F9FAFB;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .radio-item:hover,
+        .checkbox-item:hover {
+            background: #F3F4F6;
+            transform: translateX(-5px);
+        }
+
+        .radio-item.selected,
+        .checkbox-item.selected {
+            background: linear-gradient(135deg, #EDE9FE, #E9D5FF);
+            border-color: #8B5CF6;
+            transform: translateX(-5px);
+        }
+
+        .radio-item.selected::after {
+            content: '✨';
+            position: absolute;
+            left: 10px;
+            animation: sparkle 0.5s ease;
+        }
+
+        @keyframes sparkle {
+            0% { transform: scale(0) rotate(0deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(180deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 1; }
+        }
+
+        .radio-item input[type="radio"],
+        .checkbox-item input[type="checkbox"] {
+            margin-left: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .radio-item label,
+        .checkbox-item label {
+            cursor: pointer;
+            flex: 1;
+            margin-bottom: 0;
+            font-weight: 500;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 35px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 16px 30px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-secondary {
+            background: #F3F4F6;
+            color: #4B5563;
+        }
+
+        .btn-secondary:hover {
+            background: #E5E7EB;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .error-message {
+            color: #DC2626;
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 100px;
+            text-align: center;
+            margin-bottom: 25px;
+            animation: successBounce 0.8s ease;
+        }
+
+        @keyframes successBounce {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .error-icon {
+            font-size: 80px;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #DC2626;
+        }
+
+        .splash-screen {
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        .logo {
+            font-size: 80px;
+            margin-bottom: 20px;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid #E5E7EB;
+            border-top: 4px solid #6366F1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 30px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .step-indicator {
+            text-align: center;
+            color: #6B7280;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .required {
+            color: #DC2626;
+            margin-right: 4px;
+        }
+
+        .testimonial {
+            background: #F9FAFB;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-right: 4px solid #10B981;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #4B5563;
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .testimonial-author {
+            color: #1F2937;
+            font-weight: 600;
+        }
+
+        .testimonial-role {
+            color: #6B7280;
+            font-size: 14px;
+        }
+
+        .urgency-banner {
+            background: linear-gradient(135deg, #FEE2E2, #FECACA);
+            border: 2px solid #F87171;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .urgency-text {
+            color: #991B1B;
+            font-weight: 600;
+        }
+
+        .spots-left {
+            display: inline-block;
+            background: #DC2626;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin-right: 8px;
+        }
+
+        .social-proof {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            padding: 15px;
+            background: #F0FDF4;
+            border-radius: 10px;
+        }
+
+        .social-proof-icon {
+            font-size: 24px;
+        }
+
+        .social-proof-text {
+            color: #14532D;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 25px;
+                border-radius: 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .floating-badge {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+
+            .trust-badges {
+                font-size: 10px;
+                padding: 8px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Badge -->
+    <div class="floating-badge">
+        🔥 הצעה מוגבלת!
+    </div>
+
+    <!-- Trust Badges -->
+    <div class="trust-badges">
+        <div class="trust-badge">
+            🔒 מאובטח SSL
+        </div>
+        <div class="trust-badge">
+            ⭐ 4.9/5 (127 ביקורות)
+        </div>
+        <div class="trust-badge">
+            ✅ ללא התחייבות
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Splash Screen -->
+        <div id="screen-splash" class="screen active">
+            <div class="splash-screen">
+                <div class="logo">🚀</div>
+                <h1>רגע אחד...</h1>
+                <p style="color: #6B7280; margin-top: 10px;">מכינים עבורך משהו מיוחד</p>
+                <div class="spinner"></div>
+            </div>
+        </div>
+
+        <!-- Screen 1: Welcome -->
+        <div id="screen-welcome" class="screen">
+            <div class="urgency-banner">
+                <div class="urgency-text">
+                    <span class="spots-left">נותרו 3 מקומות</span>
+                    לייעוץ חינם השבוע!
+                </div>
+            </div>
+
+            <h1>קבל ייעוץ עסקי אישי בשווי <span class="highlight">₪1,500</span> - בחינם!</h1>
+            
+            <div class="subtitle">
+                <strong>אופיר שגן</strong>, יועץ לעסקים קטנים עם ניסיון של 10+ שנים, 
+                מציע ייעוץ ראשוני מקיף ללא עלות - אבל רק ל-3 העסקים הראשונים השבוע.
+            </div>
+
+            <div class="value-proposition">
+                <div class="value-title">מה תקבל בייעוץ החינמי? 🎁</div>
+                <ul class="value-list">
+                    <li>ניתוח מקיף של הרעיון העסקי שלך</li>
+                    <li>תוכנית פעולה מותאמת אישית ל-90 יום</li>
+                    <li>3 אסטרטגיות שיווק מוכחות לתחום שלך</li>
+                    <li>חיבור למענקים ומקורות מימון רלוונטיים</li>
+                    <li>גישה לקהילת יזמים אקסקלוסיבית</li>
+                </ul>
+            </div>
+
+            <div class="social-proof">
+                <span class="social-proof-icon">👥</span>
+                <span class="social-proof-text">427 יזמים כבר קיבלו ייעוץ החודש</span>
+            </div>
+
+            <div class="testimonial">
+                <div class="testimonial-text">
+                    "הייעוץ של אופיר שינה לי את כל הגישה לעסק. תוך 3 חודשים הכפלתי את המכירות!"
+                </div>
+                <div class="testimonial-author">רונית כהן</div>
+                <div class="testimonial-role">בעלת סטודיו לעיצוב גרפי</div>
+            </div>
+
+            <div class="countdown">
+                <div class="countdown-title">ההצעה תסתיים בעוד:</div>
+                <div class="countdown-timer" id="countdown">23:59:47</div>
+            </div>
+
+            <button class="btn btn-primary" onclick="nextScreen()">
+                התחל עכשיו - 5 דקות בלבד ⏱️
+            </button>
+        </div>
+
+        <!-- Screen 2: Part 1 - Vision and Motivation -->
+        <div id="screen-part1" class="screen">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 25%"></div>
+                </div>
+                <div class="progress-text">
+                    <span class="progress-percentage">25%</span> הושלם | שלב 1 מתוך 4
+                </div>
+            </div>
+            
+            <h2>בואו נכיר - מה החלום שלך? 💭</h2>
+            
+            <div class="question">
+                <label>
+                    <span class="question-number">1</span>
+                    מה גרם לך לחשוב על הקמת עסק?
+                    <span class="required">*</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q1" value="חלום ישן">
+                        <label>חלום ישן שהגיע הזמן להגשים 🌟</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q1" value="רצון לעצמאות">
+                        <label>רצון לעצמאות וחופש 🦅</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q1" value="נמאס מהשכירות">
+                        <label>נמאס לי מהעבודה השכירה 😤</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q1" value="כבר עצמאי">
+                        <label>אני כבר עצמאי ורוצה להתרחב 📈</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q1" value="אחר">
+                        <label>אחר</label>
+                    </div>
+                </div>
+                <div class="error-message">אנא בחר אפשרות כדי להמשיך</div>
+            </div>
+
+            <div class="question">
+                <label>
+                    <span class="question-number">2</span>
+                    דמיין שעברה שנה והעסק שלך מצליח - איך זה נראה? ✨
+                </label>
+                <textarea name="q2" placeholder="לדוגמה: 'אני יושב במשרד שלי, מנהל צוות של 5 אנשים, והעסק מגלגל 100K בחודש...'"></textarea>
+            </div>
+
+            <div class="question">
+                <label>
+                    <span class="question-number">3</span>
+                    מה הכי מניע אותך להצליח?
+                    <span class="required">*</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q3" value="חופש ועצמאות">
+                        <label>חופש ועצמאות 🗽</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q3" value="השפעה ומשמעות">
+                        <label>השפעה ומשמעות 💫</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q3" value="כסף ויציבות">
+                        <label>כסף ויציבות כלכלית 💰</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q3" value="תחושת עשייה">
+                        <label>תחושת עשייה והגשמה 🎯</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q3" value="אחר">
+                        <label>אחר</label>
+                    </div>
+                </div>
+                <div class="error-message">אנא בחר אפשרות כדי להמשיך</div>
+            </div>
+
+            <div class="question">
+                <label>
+                    <span class="question-number">4</span>
+                    מה האתגרים שמטרידים אותך? (אפשר לסמן כמה)
+                </label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item" onclick="selectCheckbox(this)">
+                        <input type="checkbox" name="q4" value="חוסר ודאות">
+                        <label>חוסר ודאות לגבי העתיד 😰</label>
+                    </div>
+                    <div class="checkbox-item" onclick="selectCheckbox(this)">
+                        <input type="checkbox" name="q4" value="פחד מכישלון">
+                        <label>פחד מכישלון 😟</label>
+                    </div>
+                    <div class="checkbox-item" onclick="selectCheckbox(this)">
+                        <input type="checkbox" name="q4" value="חוסר ידע">
+                        <label>לא יודע איך להתחיל 🤷</label>
+                    </div>
+                    <div class="checkbox-item" onclick="selectCheckbox(this)">
+                        <input type="checkbox" name="q4" value="ניהול כספים">
+                        <label>ניהול כספים ותקציב 💳</label>
+                    </div>
+                    <div class="checkbox-item" onclick="selectCheckbox(this)">
+                        <input type="checkbox" name="q4" value="שיווק">
+                        <label>שיווק ומציאת לקוחות 📣</label>
+                    </div>
+                    <div class="checkbox-item" onclick="selectCheckbox(this)">
+                        <input type="checkbox" name="q4" value="אחר">
+                        <label>אחר</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-primary" onclick="nextScreen()">המשך ⬅️</button>
+            </div>
+        </div>
+
+        <!-- Screen 3: Part 2 - Idea and Market -->
+        <div id="screen-part2" class="screen">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 50%"></div>
+                </div>
+                <div class="progress-text">
+                    <span class="progress-percentage">50%</span> הושלם | שלב 2 מתוך 4
+                </div>
+            </div>
+            
+            <h2>ספר לי על הרעיון שלך 💡</h2>
+            
+            <div class="question">
+                <label>
+                    <span class="question-number">5</span>
+                    באיזה תחום העסק שלך?
+                    <span class="required">*</span>
+                </label>
+                <input type="text" name="q5" placeholder="לדוגמה: ייעוץ עסקי, מסעדה, חנות אונליין, אפליקציה...">
+                <div class="error-message">אנא מלא שדה זה</div>
+            </div>
+
+            <div class="question">
+                <label>
+                    <span class="question-number">6</span>
+                    איזה מוצר או שירות תציע?
+                </label>
+                <textarea name="q6" placeholder="תאר בקצרה את המוצר/שירות העיקרי שלך"></textarea>
+            </div>
+
+            <div class="question">
+                <label>
+                    <span class="question-number">7</span>
+                    מי הלקוחות האידיאליים שלך?
+                    <span class="required">*</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q7" value="B2C">
+                        <label>אנשים פרטיים (B2C) 👤</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q7" value="B2B">
+                        <label>עסקים (B2B) 🏢</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q7" value="מוסדות">
+                        <label>מוסדות וארגונים 🏛️</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q7" value="לא בטוח">
+                        <label>עדיין לא בטוח 🤔</label>
+                    </div>
+                </div>
+                <div class="error-message">אנא בחר אפשרות</div>
+            </div>
+
+            <div class="question">
+                <label>
+                    <span class="question-number">8</span>
+                    מה הייחוד שלך? למה לקוחות יבחרו בך?
+                </label>
+                <textarea name="q8" placeholder="מה מבדיל אותך מהמתחרים? מה הערך הייחודי שלך?"></textarea>
+            </div>
+
+            <div class="question">
+                <label>
+                    <span class="question-number">9</span>
+                    באיזה שלב אתה כרגע?
+                    <span class="required">*</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q9" value="רק רעיון">
+                        <label>רק רעיון בראש 💭</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q9" value="מוצר חלקי">
+                        <label>התחלתי לפתח משהו 🛠️</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q9" value="לקוחות ראשונים">
+                        <label>יש לי כבר לקוחות ראשונים 🎉</label>
+                    </div>
+                </div>
+                <div class="error-message">אנא בחר אפשרות</div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="previousScreen()">חזור ➡️</button>
+                <button class="btn btn-primary" onclick="nextScreen()">המשך ⬅️</button>
+            </div>
+        </div>
+
+        <!-- Screen 4: Part 3 - Resources and Readiness -->
+        <div id="screen-part3" class="screen">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%"></div>
+                </div>
+                <div class="progress-text">
+                    <span class="progress-percentage">75%</span> הושלם | שלב 3 מתוך 4
+                </div>
+            </div>
+            
+            <h2>בואו נדבר על משאבים 💼</h2>
+            
+            <div class="question">
+                <label>
+                    <span class="question-number">10</span>
+                    איזה תקציב אתה מתכנן להשקיע?
+                    <span class="required">*</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q10" value="עד 10K">
+                        <label>עד 10,000 ₪</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q10" value="10-50K">
+                        <label>10,000-50,000 ₪</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q10" value="50-250K">
+                        <label>50,000-250,000 ₪</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q10" value="מעל 250K">
+                        <label>מעל 250,000 ₪</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q10" value="בעיקר זמן">
+                        <label>בעיקר זמן והשקעה עצמית ⏰</label>
+                    </div>
+                </div>
+                <div class="error-message">אנא בחר אפשרות</div>
+            </div>
+
+            <div class="question">
+                <label>
+                    <span class="question-number">11</span>
+                    איך תממן את העסק?
+                    <span class="required">*</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q11" value="הון עצמי">
+                        <label>הון עצמי 💵</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q11" value="הלוואה">
+                        <label>הלוואה או מענק 🏦</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q11" value="שותף">
+                        <label>שותף או משקיע 🤝</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q11" value="לא יודע">
+                        <label>עדיין לא יודע 🤷</label>
+                    </div>
+                </div>
+                <div class="error-message">אנא בחר אפשרות</div>
+            </div>
+
+            <div class="question">
+                <label>
+                    <span class="question-number">12</span>
+                    כמה אתה מוכן להתחיל?
+                    <span class="required">*</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q12" value="100% מוכן">
+                        <label>100% מוכן - בואו נתחיל! 🚀</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q12" value="רוצה אבל צריך הכוונה">
+                        <label>מוכן אבל צריך הכוונה 🧭</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q12" value="עדיין בבירור">
+                        <label>עדיין בשלב למידה 📚</label>
+                    </div>
+                </div>
+                <div class="error-message">אנא בחר אפשרות</div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="previousScreen()">חזור ➡️</button>
+                <button class="btn btn-primary" onclick="nextScreen()">כמעט סיימנו! ⬅️</button>
+            </div>
+        </div>
+
+        <!-- Screen 5: Part 4 - Next Steps -->
+        <div id="screen-part4" class="screen">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 90%"></div>
+                </div>
+                <div class="progress-text">
+                    <span class="progress-percentage">90%</span> הושלם | שלב אחרון!
+                </div>
+            </div>
+            
+            <h2>הצעדים הבאים שלך 🎯</h2>
+            
+            <div class="question">
+                <label>
+                    <span class="question-number">13</span>
+                    באילו תחומים תרצה עזרה? (סמן את כל הרלוונטיים)
+                </label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item" onclick="selectCheckbox(this)">
+                        <input type="checkbox" name="q13" value="שיווק דיגיטלי">
+                        <label>שיווק דיגיטלי ופרסום 📱</label>
+                    </div>
+                    <div class="checkbox-item" onclick="selectCheckbox(this)">
+                        <input type="checkbox" name="q13" value="תמחור">
+                        <label>תמחור ומודל עסקי 💰</label>
+                    </div>
+                    <div class="checkbox-item" onclick="selectCheckbox(this)">
+                        <input type="checkbox" name="q13" value="תפעול">
+                        <label>תפעול ומערכות ⚙️</label>
+                    </div>
+                    <div class="checkbox-item" onclick="selectCheckbox(this)">
+                        <input type="checkbox" name="q13" value="תזרים מזומנים">
+                        <label>תזרים מזומנים 📊</label>
+                    </div>
+                    <div class="checkbox-item" onclick="selectCheckbox(this)">
+                        <input type="checkbox" name="q13" value="רישוי">
+                        <label>רישוי ורגולציה 📋</label>
+                    </div>
+                    <div class="checkbox-item" onclick="selectCheckbox(this)">
+                        <input type="checkbox" name="q13" value="מיקוד">
+                        <label>מיקוד ואסטרטגיה 🎯</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="question">
+                <label>
+                    <span class="question-number">14</span>
+                    כמה זמן תוכל להשקיע בשבוע?
+                    <span class="required">*</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q14" value="2-3 שעות">
+                        <label>2-3 שעות ⏱️</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q14" value="4-6 שעות">
+                        <label>4-6 שעות ⏰</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this)">
+                        <input type="radio" name="q14" value="7+ שעות">
+                        <label>7+ שעות - אני All-In! 💪</label>
+                    </div>
+                </div>
+                <div class="error-message">אנא בחר אפשרות</div>
+            </div>
+
+            <div class="question">
+                <label>
+                    <span class="question-number">15</span>
+                    מה הביא אותך אלינו דווקא היום?
+                </label>
+                <textarea name="q15" placeholder="מה הטריגר? מה קרה שהחלטת למלא את השאלון עכשיו?"></textarea>
+            </div>
+
+            <div class="value-proposition" style="background: linear-gradient(135deg, #DCFCE7, #BBF7D0);">
+                <div class="value-title">🎁 ההצעה המיוחדת שלי אליך:</div>
+                <ul class="value-list">
+                    <li>שיחת ייעוץ אישית של 60 דקות (שווי ₪1,500)</li>
+                    <li>ניתוח SWOT מלא לעסק שלך</li>
+                    <li>3 המלצות פרקטיות שתוכל ליישם מיד</li>
+                    <li>חיבור למענקים רלוונטיים (עד 40,000₪)</li>
+                </ul>
+                <div style="text-align: center; margin-top: 15px; color: #14532D; font-weight: 700;">
+                    ⏰ רק ל-3 הראשונים שיירשמו השבוע!
+                </div>
+            </div>
+
+            <div class="question">
+                <label>
+                    <span class="question-number">16</span>
+                    רוצה לקבל את הייעוץ החינמי?
+                    <span class="required">*</span>
+                </label>
+                <div class="radio-group">
+                    <div class="radio-item" onclick="selectRadio(this); handleContactChoice(this)">
+                        <input type="radio" name="q16" value="כן">
+                        <label>כן! אני רוצה את הייעוץ החינמי 🎯</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this); handleContactChoice(this)">
+                        <input type="radio" name="q16" value="אולי">
+                        <label>מעניין אותי, שלח פרטים 📧</label>
+                    </div>
+                    <div class="radio-item" onclick="selectRadio(this); handleContactChoice(this)">
+                        <input type="radio" name="q16" value="לא">
+                        <label>לא כרגע, תודה</label>
+                    </div>
+                </div>
+                <div class="error-message">אנא בחר אפשרות</div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="previousScreen()">חזור ➡️</button>
+                <button id="part4-next-btn" class="btn btn-primary" onclick="handlePart4Next()">סיים ושלח 🚀</button>
+            </div>
+        </div>
+
+        <!-- Screen 6: Contact Details (Conditional) -->
+        <div id="screen-contact" class="screen">
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 100%"></div>
+                </div>
+                <div class="progress-text">
+                    <span class="progress-percentage">100%</span> הושלם | רגע אחרון!
+                </div>
+            </div>
+            
+            <h2>מעולה! 🎉 רק נצטרך את הפרטים שלך</h2>
+            
+            <div class="urgency-banner">
+                <div class="urgency-text">
+                    ⚡ מבצע מיוחד: הרשם עכשיו וקבל בונוס של מדריך "10 הטעויות הקריטיות של יזמים"
+                </div>
+            </div>
+            
+            <div class="question">
+                <label>
+                    השם המלא שלך
+                    <span class="required">*</span>
+                </label>
+                <input type="text" name="q17a" placeholder="ישראל ישראלי">
+                <div class="error-message">אנא הכנס שם מלא</div>
+            </div>
+
+            <div class="question">
+                <label>
+                    מספר טלפון
+                    <span class="required">*</span>
+                </label>
+                <input type="tel" name="q17b" placeholder="050-1234567" pattern="[0-9]{3}-[0-9]{7}">
+                <div class="error-message">אנא הכנס מספר טלפון תקין</div>
+            </div>
+
+            <div class="question">
+                <label>
+                    כתובת אימייל
+                </label>
+                <input type="email" name="q17c" placeholder="your@email.com">
+                <div class="error-message">אנא הכנס כתובת אימייל תקינה</div>
+            </div>
+
+            <div class="question">
+                <label>
+                    מספר וואטסאפ (אם שונה מהטלפון)
+                </label>
+                <input type="text" name="q17d" placeholder="מספר וואטסאפ">
+            </div>
+
+            <div class="question">
+                <div class="checkbox-item" onclick="selectCheckbox(this)" style="background: #FEF3C7; border: 2px solid #F59E0B;">
+                    <input type="checkbox" name="q18" value="מאשר">
+                    <label>
+                        ✅ אני מאשר קבלת ייעוץ חינמי וחומרים שימושיים מאופיר שגן
+                        <span class="required">*</span>
+                    </label>
+                </div>
+                <div class="error-message">אנא אשר את התנאים</div>
+            </div>
+
+            <div class="social-proof" style="background: #FEF3C7;">
+                <span style="font-size: 20px;">🔒</span>
+                <span style="color: #92400E; font-weight: 600;">
+                    הפרטים שלך מאובטחים ולא יועברו לצד שלישי
+                </span>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="previousScreen()">חזור ➡️</button>
+                <button class="btn btn-primary" onclick="submitForm()">
+                    🎁 קבל את הייעוץ החינמי עכשיו!
+                </button>
+            </div>
+        </div>
+
+        <!-- Screen 7: Success -->
+        <div id="screen-success" class="screen">
+            <div class="success-icon">🎉</div>
+            <h1>מצוין! קיבלנו את הפרטים שלך</h1>
+            
+            <div class="value-proposition" style="background: linear-gradient(135deg, #DCFCE7, #BBF7D0); margin: 25px 0;">
+                <div class="value-title">מה קורה עכשיו?</div>
+                <ul class="value-list">
+                    <li>תוך 24 שעות אופיר ייצור איתך קשר</li>
+                    <li>תקבל במייל את המדריך המובטח</li>
+                    <li>נתאם שיחת ייעוץ של 60 דקות</li>
+                    <li>תקבל תוכנית פעולה מותאמת אישית</li>
+                </ul>
+            </div>
+            
+            <div class="testimonial">
+                <div class="testimonial-text">
+                    "אופיר עזר לי להבין בדיוק איפה אני תקוע ונתן לי כלים פרקטיים. תוך חודש הצלחתי לסגור 5 לקוחות חדשים!"
+                </div>
+                <div class="testimonial-author">דני לוי</div>
+                <div class="testimonial-role">יועץ שיווק דיגיטלי</div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <p style="color: #6B7280; margin-bottom: 15px;">
+                    📱 שמור את המספר: <strong>054-9998817</strong>
+                </p>
+                <p style="color: #6B7280;">
+                    📧 בדוק את תיבת המייל שלך (גם בספאם)
+                </p>
+            </div>
+            
+            <button class="btn btn-primary" onclick="location.reload()">סגור</button>
+        </div>
+
+        <!-- Screen 8: Error -->
+        <div id="screen-error" class="screen">
+            <div class="error-icon">😔</div>
+            <h1>אופס, משהו השתבש</h1>
+            <p style="color: #6B7280; line-height: 1.8; margin: 20px 0;">
+                לא הצלחנו לשלוח את הטופס. אנא בדוק את החיבור לאינטרנט ונסה שוב.
+            </p>
+            <p style="color: #6B7280; margin-bottom: 25px;">
+                או שתוכל לפנות ישירות:<br>
+                📱 054-9998817<br>
+                📧 shaganofir@gmail.com
+            </p>
+            <button class="btn btn-primary" onclick="submitForm()">נסה שוב</button>
+        </div>
+    </div>
+
+    <script>
+        // Countdown Timer
+        function startCountdown() {
+            const countdownEl = document.getElementById('countdown');
+            if (!countdownEl) return;
+            
+            let hours = 23, minutes = 59, seconds = 47;
+            
+            setInterval(() => {
+                seconds--;
+                if (seconds < 0) {
+                    seconds = 59;
+                    minutes--;
+                    if (minutes < 0) {
+                        minutes = 59;
+                        hours--;
+                        if (hours < 0) {
+                            hours = 23;
+                        }
+                    }
+                }
+                
+                countdownEl.textContent = 
+                    String(hours).padStart(2, '0') + ':' + 
+                    String(minutes).padStart(2, '0') + ':' + 
+                    String(seconds).padStart(2, '0');
+            }, 1000);
+        }
+
+        // Form data object
+        let formData = {};
+        
+        // Current screen tracking
+        let currentScreenIndex = 0;
+        const screens = [
+            'screen-splash',
+            'screen-welcome',
+            'screen-part1',
+            'screen-part2',
+            'screen-part3',
+            'screen-part4',
+            'screen-contact',
+            'screen-success',
+            'screen-error'
+        ];
+
+        // Initialize app
+        window.addEventListener('DOMContentLoaded', () => {
+            // Load saved data
+            loadSavedData();
+            
+            // Start countdown
+            startCountdown();
+            
+            // Show splash screen for 2 seconds
+            setTimeout(() => {
+                showScreen('screen-welcome');
+            }, 2000);
+        });
+
+        // Screen navigation
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(screen => {
+                screen.classList.remove('active');
+            });
+            
+            document.getElementById(screenId).classList.add('active');
+            currentScreenIndex = screens.indexOf(screenId);
+            
+            window.scrollTo(0, 0);
+            saveProgress();
+        }
+
+        function nextScreen() {
+            if (!validateCurrentScreen()) {
+                return;
+            }
+            
+            saveFormData();
+            
+            if (currentScreenIndex < screens.length - 1) {
+                showScreen(screens[currentScreenIndex + 1]);
+            }
+        }
+
+        function previousScreen() {
+            if (currentScreenIndex > 1) {
+                showScreen(screens[currentScreenIndex - 1]);
+            }
+        }
+
+        // Radio button selection
+        function selectRadio(element) {
+            const radioName = element.querySelector('input[type="radio"]').name;
+            document.querySelectorAll(`input[name="${radioName}"]`).forEach(radio => {
+                radio.parentElement.classList.remove('selected');
+            });
+            
+            element.classList.add('selected');
+            element.querySelector('input[type="radio"]').checked = true;
+            
+            const question = element.closest('.question');
+            if (question) {
+                const errorMsg = question.querySelector('.error-message');
+                if (errorMsg) errorMsg.classList.remove('show');
+            }
+            
+            saveFormData();
+        }
+
+        // Checkbox selection
+        function selectCheckbox(element) {
+            const checkbox = element.querySelector('input[type="checkbox"]');
+            checkbox.checked = !checkbox.checked;
+            
+            if (checkbox.checked) {
+                element.classList.add('selected');
+            } else {
+                element.classList.remove('selected');
+            }
+            
+            const question = element.closest('.question');
+            if (question) {
+                const errorMsg = question.querySelector('.error-message');
+                if (errorMsg) errorMsg.classList.remove('show');
+            }
+            
+            saveFormData();
+        }
+
+        // Handle contact choice
+        function handleContactChoice(element) {
+            const value = element.querySelector('input[type="radio"]').value;
+            const nextBtn = document.getElementById('part4-next-btn');
+            
+            if (value === 'לא') {
+                nextBtn.innerHTML = 'סיים ושלח 📨';
+            } else {
+                nextBtn.innerHTML = 'המשך לפרטים 🎯';
+            }
+        }
+
+        // Handle Part 4 next
+        function handlePart4Next() {
+            if (!validateCurrentScreen()) {
+                return;
+            }
+            
+            saveFormData();
+            
+            const q16Value = formData.q16;
+            if (q16Value === 'לא') {
+                submitForm();
+            } else {
+                showScreen('screen-contact');
+            }
+        }
+
+        // Validation
+        function validateCurrentScreen() {
+            const activeScreen = document.querySelector('.screen.active');
+            const screenId = activeScreen.id;
+            let isValid = true;
+            
+            const requiredFields = {
+                'screen-part1': ['q1', 'q3'],
+                'screen-part2': ['q5', 'q7', 'q9'],
+                'screen-part3': ['q10', 'q11', 'q12'],
+                'screen-part4': ['q14', 'q16'],
+                'screen-contact': ['q17a', 'q17b', 'q18']
+            };
+            
+            if (requiredFields[screenId]) {
+                requiredFields[screenId].forEach(fieldName => {
+                    const field = activeScreen.querySelector(`[name="${fieldName}"]`);
+                    
+                    if (field) {
+                        if (field.type === 'radio') {
+                            const checked = activeScreen.querySelector(`[name="${fieldName}"]:checked`);
+                            if (!checked) {
+                                const question = activeScreen.querySelector(`[name="${fieldName}"]`).closest('.question');
+                                const errorMsg = question.querySelector('.error-message');
+                                if (errorMsg) errorMsg.classList.add('show');
+                                isValid = false;
+                            }
+                        } else if (field.type === 'checkbox') {
+                            if (!field.checked) {
+                                const question = field.closest('.question');
+                                const errorMsg = question.querySelector('.error-message');
+                                if (errorMsg) errorMsg.classList.add('show');
+                                isValid = false;
+                            }
+                        } else if (field.type === 'text' || field.type === 'tel' || field.type === 'email') {
+                            if (!field.value.trim()) {
+                                const question = field.closest('.question');
+                                const errorMsg = question.querySelector('.error-message');
+                                if (errorMsg) errorMsg.classList.add('show');
+                                isValid = false;
+                            }
+                            
+                            // Phone validation
+                            if (field.name === 'q17b' && field.value) {
+                                const phoneRegex = /^0[0-9]{1,2}-?[0-9]{7}$/;
+                                if (!phoneRegex.test(field.value.replace(/\s/g, ''))) {
+                                    const question = field.closest('.question');
+                                    const errorMsg = question.querySelector('.error-message');
+                                    if (errorMsg) {
+                                        errorMsg.textContent = 'אנא הכנס מספר טלפון תקין';
+                                        errorMsg.classList.add('show');
+                                    }
+                                    isValid = false;
+                                }
+                            }
+                            
+                            // Email validation
+                            if (field.name === 'q17c' && field.value) {
+                                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                                if (!emailRegex.test(field.value)) {
+                                    const question = field.closest('.question');
+                                    const errorMsg = question.querySelector('.error-message');
+                                    if (errorMsg) errorMsg.classList.add('show');
+                                    isValid = false;
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            
+            return isValid;
+        }
+
+        // Save form data
+        function saveFormData() {
+            const activeScreen = document.querySelector('.screen.active');
+            
+            // Save text inputs
+            activeScreen.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea').forEach(field => {
+                if (field.name) {
+                    formData[field.name] = field.value;
+                }
+            });
+            
+            // Save radio buttons
+            activeScreen.querySelectorAll('input[type="radio"]:checked').forEach(radio => {
+                formData[radio.name] = radio.value;
+            });
+            
+            // Save checkboxes
+            activeScreen.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                if (checkbox.name === 'q4' || checkbox.name === 'q13') {
+                    if (!formData[checkbox.name]) formData[checkbox.name] = [];
+                    
+                    if (checkbox.checked && !formData[checkbox.name].includes(checkbox.value)) {
+                        formData[checkbox.name].push(checkbox.value);
+                    } else if (!checkbox.checked && formData[checkbox.name].includes(checkbox.value)) {
+                        const index = formData[checkbox.name].indexOf(checkbox.value);
+                        formData[checkbox.name].splice(index, 1);
+                    }
+                } else {
+                    formData[checkbox.name] = checkbox.checked;
+                }
+            });
+            
+            localStorage.setItem('questionnaireData', JSON.stringify(formData));
+        }
+
+        // Load saved data
+        function loadSavedData() {
+            const savedData = localStorage.getItem('questionnaireData');
+            if (savedData) {
+                formData = JSON.parse(savedData);
+                
+                Object.keys(formData).forEach(key => {
+                    const value = formData[key];
+                    
+                    if (Array.isArray(value)) {
+                        value.forEach(val => {
+                            const checkbox = document.querySelector(`input[name="${key}"][value="${val}"]`);
+                            if (checkbox) {
+                                checkbox.checked = true;
+                                checkbox.parentElement.classList.add('selected');
+                            }
+                        });
+                    } else if (typeof value === 'boolean') {
+                        const checkbox = document.querySelector(`input[name="${key}"]`);
+                        if (checkbox) {
+                            checkbox.checked = value;
+                            if (value) checkbox.parentElement.classList.add('selected');
+                        }
+                    } else {
+                        const field = document.querySelector(`[name="${key}"]`);
+                        if (field) {
+                            if (field.type === 'radio') {
+                                const radio = document.querySelector(`input[name="${key}"][value="${value}"]`);
+                                if (radio) {
+                                    radio.checked = true;
+                                    radio.parentElement.classList.add('selected');
+                                }
+                            } else {
+                                field.value = value;
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Save progress
+        function saveProgress() {
+            localStorage.setItem('currentScreen', screens[currentScreenIndex]);
+        }
+
+        // Submit form - UPDATED WITH FORM DATA
+        async function submitForm() {
+            // Ensure all data is saved
+            saveFormData();
+            
+            // Add timestamp
+            formData.timestamp = new Date().toLocaleString('he-IL');
+            
+            // Prepare data for Google Apps Script with all fields
+            const submitData = {
+                timestamp: formData.timestamp,
+                q1: formData.q1 || '',
+                q2: formData.q2 || '',
+                q3: formData.q3 || '',
+                q4: Array.isArray(formData.q4) ? formData.q4.join(', ') : '',
+                q5: formData.q5 || '',
+                q6: formData.q6 || '',
+                q7: formData.q7 || '',
+                q8: formData.q8 || '',
+                q9: formData.q9 || '',
+                q10: formData.q10 || '',
+                q11: formData.q11 || '',
+                q12: formData.q12 || '',
+                q13: Array.isArray(formData.q13) ? formData.q13.join(', ') : '',
+                q14: formData.q14 || '',
+                q15: formData.q15 || '',
+                q16: formData.q16 || '',
+                q17a: formData.q17a || '',
+                q17b: formData.q17b || '',
+                q17c: formData.q17c || '',
+                q17d: formData.q17d || '',
+                q18: formData.q18 === true ? 'מאשר' : ''
+            };
+            
+            // Show loading state
+            const activeScreen = document.querySelector('.screen.active');
+            const submitBtn = activeScreen.querySelector('.btn-primary');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = 'שולח... ⏳';
+            submitBtn.disabled = true;
+            
+            try {
+                // Google Apps Script URL
+                const scriptUrl = 'https://script.google.com/macros/s/AKfycbyxpwO1wPunQLYMKqcDYSFXcbrRFUC__nJVAxVF2MqTsEge-AVSvi7mNdgdnDHs9hFucw/exec';
+                
+                // Create FormData for better compatibility
+                const formDataToSend = new FormData();
+                Object.keys(submitData).forEach(key => {
+                    formDataToSend.append(key, submitData[key]);
+                });
+                
+                // Send data to Google Apps Script
+                const response = await fetch(scriptUrl, {
+                    method: 'POST',
+                    body: formDataToSend
+                });
+                
+                // Clear saved data after successful submission
+                localStorage.removeItem('questionnaireData');
+                localStorage.removeItem('currentScreen');
+                
+                // Show success screen
+                showScreen('screen-success');
+                
+                // Send notification to owner (optional)
+                if (formData.q16 === 'כן' || formData.q16 === 'אולי') {
+                    console.log('ליד חם נשלח! פרטים:', {
+                        name: formData.q17a,
+                        phone: formData.q17b,
+                        email: formData.q17c,
+                        business: formData.q5
+                    });
+                }
+                
+                // Track conversion (for analytics)
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'form_submit', {
+                        'event_category': 'Lead Generation',
+                        'event_label': formData.q16,
+                        'value': formData.q16 === 'כן' ? 100 : formData.q16 === 'אולי' ? 50 : 10
+                    });
+                }
+                
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                
+                // Try alternative submission method
+                try {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.name = 'hidden-iframe';
+                    document.body.appendChild(iframe);
+                    
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = scriptUrl;
+                    form.target = 'hidden-iframe';
+                    
+                    Object.keys(submitData).forEach(key => {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = key;
+                        input.value = submitData[key];
+                        form.appendChild(input);
+                    });
+                    
+                    document.body.appendChild(form);
+                    form.submit();
+                    
+                    setTimeout(() => {
+                        document.body.removeChild(form);
+                        document.body.removeChild(iframe);
+                        localStorage.removeItem('questionnaireData');
+                        localStorage.removeItem('currentScreen');
+                        showScreen('screen-success');
+                    }, 1000);
+                    
+                } catch (fallbackError) {
+                    console.error('Fallback submission failed:', fallbackError);
+                    showScreen('screen-error');
+                }
+                
+            } finally {
+                // Reset button state
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+
+        // PWA Installation
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+        });
+        
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>

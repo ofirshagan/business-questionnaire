@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>בדיקת חיבור Google Sheets - FormData</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            margin: 10px 0;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .status {
+            margin: 20px 0;
+            padding: 15px;
+            border-radius: 5px;
+            display: none;
+        }
+        .status.show {
+            display: block;
+        }
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .code {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 12px;
+            margin: 10px 0;
+            word-break: break-all;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 בדיקת חיבור Google Sheets</h1>
+        
+        <p>לחץ על הכפתורים לבדיקת סוגי שליחה שונים:</p>
+        
+        <button onclick="testFormData()">בדיקה 1: שליחת FormData</button>
+        <button onclick="testIframe()">בדיקה 2: שליחה עם iframe</button>
+        <button onclick="testFullData()">בדיקה 3: שליחת נתונים מלאים</button>
+        
+        <div id="status" class="status"></div>
+        
+        <h3>מידע טכני:</h3>
+        <div class="code">
+            URL: https://script.google.com/macros/s/AKfycbyxpwO1wPunQLYMKqcDYSFXcbrRFUC__nJVAxVF2MqTsEge-AVSvi7mNdgdnDHs9hFucw/exec
+        </div>
+        
+        <div id="debug" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbyxpwO1wPunQLYMKqcDYSFXcbrRFUC__nJVAxVF2MqTsEge-AVSvi7mNdgdnDHs9hFucw/exec';
+        
+        function showStatus(type, message) {
+            const status = document.getElementById('status');
+            status.className = `status ${type} show`;
+            status.innerHTML = message;
+        }
+        
+        function addDebug(message) {
+            const debug = document.getElementById('debug');
+            debug.innerHTML += `<div class="code">${new Date().toLocaleTimeString()}: ${message}</div>`;
+        }
+        
+        // Test 1: FormData
+        async function testFormData() {
+            showStatus('', 'שולח...');
+            addDebug('Starting FormData test');
+            
+            const testData = {
+                timestamp: new Date().toLocaleString('he-IL'),
+                q1: 'בדיקת FormData',
+                q5: 'תחום בדיקה',
+                q16: 'כן',
+                q17a: 'בדיקה FormData',
+                q17b: '054-9998817',
+                q17c: 'shaganofir@gmail.com'
+            };
+            
+            try {
+                const formData = new FormData();
+                Object.keys(testData).forEach(key => {
+                    formData.append(key, testData[key]);
+                    addDebug(`Added to FormData: ${key} = ${testData[key]}`);
+                });
+                
+                const response = await fetch(scriptUrl, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                addDebug(`Response status: ${response.status}`);
+                showStatus('success', '✅ FormData נשלח בהצלחה! בדוק את ה-Google Sheet');
+                
+            } catch (error) {
+                addDebug(`Error: ${error.message}`);
+                showStatus('error', `❌ שגיאה: ${error.message}`);
+            }
+        }
+        
+        // Test 2: iframe method
+        function testIframe() {
+            showStatus('', 'שולח עם iframe...');
+            addDebug('Starting iframe test');
+            
+            const testData = {
+                timestamp: new Date().toLocaleString('he-IL'),
+                q1: 'בדיקת iframe',
+                q5: 'תחום iframe',
+                q16: 'אולי',
+                q17a: 'בדיקה iframe',
+                q17b: '054-9998817',
+                q17c: 'shaganofir@gmail.com'
+            };
+            
+            try {
+                // Remove old iframe if exists
+                const oldIframe = document.getElementById('test-iframe');
+                if (oldIframe) oldIframe.remove();
+                
+                const iframe = document.createElement('iframe');
+                iframe.id = 'test-iframe';
+                iframe.style.display = 'none';
+                iframe.name = 'hidden-iframe';
+                document.body.appendChild(iframe);
+                
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = scriptUrl;
+                form.target = 'hidden-iframe';
+                
+                Object.keys(testData).forEach(key => {
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = testData[key];
+                    form.appendChild(input);
+                    addDebug(`Added to form: ${key} = ${testData[key]}`);
+                });
+                
+                document.body.appendChild(form);
+                form.submit();
+                
+                setTimeout(() => {
+                    document.body.removeChild(form);
+                    showStatus('success', '✅ iframe נשלח! בדוק את ה-Google Sheet');
+                    addDebug('iframe submission completed');
+                }, 2000);
+                
+            } catch (error) {
+                addDebug(`Error: ${error.message}`);
+                showStatus('error', `❌ שגיאה: ${error.message}`);
+            }
+        }
+        
+        // Test 3: Full data
+        async function testFullData() {
+            showStatus('', 'שולח נתונים מלאים...');
+            addDebug('Starting full data test');
+            
+            const fullData = {
+                timestamp: new Date().toLocaleString('he-IL'),
+                q1: 'חלום ישן',
+                q2: 'רוצה לבנות עסק מצליח',
+                q3: 'חופש ועצמאות',
+                q4: 'שיווק, ניהול כספים',
+                q5: 'ייעוץ עסקי',
+                q6: 'ייעוץ וליווי לעסקים קטנים',
+                q7: 'B2B',
+                q8: 'ניסיון רב וגישה אישית',
+                q9: 'לקוחות ראשונים',
+                q10: '50-250K',
+                q11: 'הון עצמי',
+                q12: '100% מוכן',
+                q13: 'שיווק דיגיטלי, תמחור',
+                q14: '7+ שעות',
+                q15: 'רוצה להגדיל את העסק',
+                q16: 'כן',
+                q17a: 'טסט מלא',
+                q17b: '054-9998817',
+                q17c: 'shaganofir@gmail.com',
+                q17d: '',
+                q18: 'מאשר'
+            };
+            
+            try {
+                const formData = new FormData();
+                Object.keys(fullData).forEach(key => {
+                    formData.append(key, fullData[key]);
+                });
+                
+                addDebug('Sending full data with FormData...');
+                
+                const response = await fetch(scriptUrl, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                addDebug(`Response status: ${response.status}`);
+                showStatus('success', '✅ נתונים מלאים נשלחו! בדוק את ה-Google Sheet');
+                
+            } catch (error) {
+                addDebug(`Error: ${error.message}`);
+                showStatus('error', `❌ שגיאה: ${error.message}`);
+            }
+        }
+    </script>
+</body>
+</html>
